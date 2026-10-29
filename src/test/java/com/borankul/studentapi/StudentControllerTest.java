@@ -32,6 +32,6 @@ class StudentControllerTest {
     void create_savesStudent() {
         Student s = new Student("Beibarys Borankul", "beibarys@example.com", "IT2-2306");
         when(repository.save(s)).thenReturn(s);
-        assertEquals("Wrong Name", controller.create(s).getFullName());
+        assertEquals("Beibarys Borankul", controller.create(s).getFullName());
     }
 }
