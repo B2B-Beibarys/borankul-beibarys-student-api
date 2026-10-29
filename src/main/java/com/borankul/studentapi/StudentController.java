@@ -31,7 +31,7 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public Student getById(@PathVariable Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student " + id + " not found"));
     }
 
     @PostMapping
