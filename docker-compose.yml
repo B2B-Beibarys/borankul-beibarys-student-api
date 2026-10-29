@@ -1,0 +1,43 @@
+name: borankul-beibarys-student-api
+
+services:
+  db:
+    image: postgres:16
+    container_name: borankul-beibarys-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:?DB_NAME is not set}
+      POSTGRES_USER: ${DB_USER:?DB_USER is not set}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is not set}
+    volumes:
+      - borankul-beibarys-pgdata:/var/lib/postgresql/data
+    networks:
+      - borankul-beibarys-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    image: borankul-beibarys-student-api:v1.0-borankul-beibarys
+    container_name: borankul-beibarys-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      STUDENT_OWNER: Beibarys Borankul
+    ports:
+      - "8081:8080"
+    networks:
+      - borankul-beibarys-net
+
+volumes:
+  borankul-beibarys-pgdata:
+
+networks:
+  borankul-beibarys-net:
+    driver: bridge
