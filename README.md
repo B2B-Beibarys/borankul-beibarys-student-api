@@ -2,3 +2,5 @@
 Author: Beibarys Borankul, group IT2-2306, student ID 38293
 Description: Spring Boot CRUD application for managing students.
 
+
+Jenkins polls the repository every minute (Beibarys Borankul).
