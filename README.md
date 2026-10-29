@@ -4,3 +4,5 @@ Description: Spring Boot CRUD application for managing students.
 
 
 Jenkins polls the repository every minute (Beibarys Borankul).
+
+Jenkins polls the repository every minute (Beibarys Borankul).
